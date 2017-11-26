@@ -9,7 +9,7 @@ file_output_tokenize = codecs.open('tokens.txt', 'w', 'utf-16')
 file_output_punctuation = codecs.open('punctuation.txt', 'w', 'utf-16')
 file_output_stopwords = codecs.open('stopWords.txt', 'w', 'utf-16')
 
-with codecs.open('sample_paragraph.txt', 'r', 'utf-16') as sampleFile:
+with codecs.open('para1.txt', 'r', 'utf-16') as sampleFile:
     data = sampleFile.read()
 
 ## tokenize into words
