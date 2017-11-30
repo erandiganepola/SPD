@@ -3,36 +3,34 @@ import os
 
 
 class StemmingSinhala():
-    def stemminig(self, doc):
+    def stemminig(self, tokensList):
 
-        doc1 = doc
-
-        suffFileDirec = os.path.dirname(os.path.abspath(__file__)) + "/../resources/suffixes.txt"
+        suffFileDirec = os.path.dirname(os.path.abspath(__file__)) + "/../resources/suffix.txt"
         try:
-            suffixFile = io.open(suffFileDirec, "r", encoding='utf-8').read()
+            suffixFile = io.open(suffFileDirec, "r", encoding='utf-16').read()
         except UnicodeDecodeError:
             suffixFile = io.open(suffFileDirec, "r", encoding='latin-1').read()
 
         suffixList = suffixFile.split()
 
-        doc.sort()
-        wordList = doc
+        tokensList.sort()
+        wordList = tokensList
 
         i = 0
-        while (i < len(wordList) - 1):
-            j = i + 1
+        j = 0
+        while (i < len(wordList)):
 
             while (j < len(wordList)):
 
-                benchWord = wordList[i]
-                checkWord = wordList[j]
-                benchCharList = list(benchWord)
-                checkCharList = list(checkWord)
+                benchWord = suffixList[i]  # 0
+                checkWord = wordList[j]  # 1
 
-                if (checkWord.startswith(benchWord)):
-                    for suffix in suffixList:
-                        if checkWord.endswith(suffix):
-                            wordList[j] = benchWord
-                            break
-                j += 1
-            i += 1
+                for suffix in suffixList:
+                    if checkWord[j].endswith(suffix):
+                        wordList[j] = benchWord
+                        break
+            j += 1
+
+        i += 1
+
+        return wordList

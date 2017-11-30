@@ -1,11 +1,13 @@
 from nltk import ngrams
 
 
-class createN_Grams:
-    def createN_Grams(self, text, ngramValue):
+class CreateN_Grams:
+    def createN_Grams(self, list, ngramValue):
         ngramArray = []
         n = ngramValue
-        trigrams = ngrams(text.split(), n)
+
+        trigrams = ngrams(list, n)
         for grams in trigrams:
             ngramArray.append(grams)
+
         return ngramArray

@@ -3,17 +3,11 @@ import os
 
 
 class RemovingStopWords:
-    def removeStopwords(self, text):
+    def removeStopwords(self, tokensList):
         infile = os.path.dirname(os.path.abspath(__file__)) + "/../resources/stopWordList.txt"
         fin = io.open(infile, "r", encoding='utf-8').read().replace('\n', ' ')
 
-        # print fin
-        text = text.lower()
-        words = text.split()
-        words.sort()
-
-        for word in words:
-            if word in fin:
-                text = text.replace(word, "")
-                # print text
-        return text
+        for i, j in enumerate(tokensList):
+            if j in fin:
+                tokensList[i] = ""
+        return tokensList
