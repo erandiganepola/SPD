@@ -12,7 +12,7 @@ class Preprocessing():
             stopWrdsObj = RemovingStopWords()
             stemmObj = StemmingSinhala()
 
-            reomveCharsText = unnecessaryCharsObj.removeChars(description)
+            reomveCharsText = unnecessaryCharsObj.remove_chars(description)
             # removeStopWordText = stopWrdsObj.removeStopwords(reomveCharsText)
             #
             # text = reomveCharsText.lower()

@@ -1,59 +1,55 @@
-import codecs
+import io
 
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
-from Preprocessor.replacingSynonyms.replacingSynonyms import replacingSynonyms
-#from SimilarityComparissor.calculateTf_idf_CosineSimilarity import calculateTf_idf_CosineSimilarity
+from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
+# from SimilarityComparissor.calculateTf_idf_CosineSimilarity import calculateTf_idf_CosineSimilarity
 
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 
 if __name__ == '__main__':
-    text = codecs.open('Test/para1.txt', 'r', 'utf-16').read()
-    print(text)
+    text = io.open('Test/para1.txt', 'r', encoding='utf-16').read()
+    print("Input: %r\n" % text)
 
     # TODO replace text between quotation marks by replacing with ""
 
     removeUnnecessary = removeUnnecessaryChars()
-    output = removeUnnecessary.removePunctuation(text)
-    text = output
-    print(text)
+    text = removeUnnecessary.removePunctuation(text)
+    print("Removed punctuations: %r\n" % text)
 
-    output = removeUnnecessary.replaceNumbers(text)
-    text = output
-    print(text)
+    text = removeUnnecessary.replaceNumbers(text)
+    print("Numbers replaced: %r\n" % text)
 
-    tokens = TokenizeText()
-    tokensList = tokens.tokenizeText(text)
-    print(tokensList)
+    tokenizer = TokenizeText()
+    tokensList = tokenizer.tokenizeText(text)
+    print("Tokens: %r\n" % tokensList)
 
-    stopWords = RemovingStopWords()
-    output = stopWords.removeStopwords(tokensList)
+    stopWordsRemover = RemovingStopWords()
+    output = stopWordsRemover.removeStopwords(tokensList)
     tokensList = output
-    print(output)
+    print("Removed stop words: %r\n" % output)
 
-    replacedSynonyms = replacingSynonyms()
+    replacedSynonyms = ReplacingSynonyms()
     synonymsReplacedList = replacedSynonyms.replacingSynonyms(tokensList)
     tokensList = synonymsReplacedList
-    print(synonymsReplacedList)
+    print("Synonym replaced: %r\n" % synonymsReplacedList)
 
-    nGrams = CreateN_Grams()
-    output = nGrams.createN_Grams(tokensList, 3)
-    tokensList = output
-    print(output)
+    nGramCreator = CreateN_Grams()
+    nGrams = nGramCreator.createN_Grams(tokensList, 3)
+    print("N-Grams: %r\n" % nGrams)
 
-    #stemming = StemmingSinhala()
-    #standardizedTextList = stemming.stemminig(tokensList)
-    #tokensList = standadizedTextList
-    #print(standardizedTextList)
+    # stemming = StemmingSinhala()
+    # standardizedTextList = stemming.stemminig(tokensList)
+    # tokensList = standadizedTextList
+    # print(standardizedTextList)
 
-    standadizedText = ''.join(tokensList)
+    standadizedText = ' '.join(tokensList)
+    print("Standardized Text: %r\n" % standadizedText)
 
-    #tf_idf = calculateTf_idf_CosineSimilarity()
-    #tfidf_matrix_train = tf_idf.calculateTf_idf(standadizedText)
+    # tf_idf = calculateTf_idf_CosineSimilarity()
+    # tfidf_matrix_train = tf_idf.calculateTf_idf(standadizedText)
 
-    #similarityScore = tf_idf.calculateSimilarityScore(tfidf_matrix_train)
-    #print(similarityScore)
-
-
+    # similarityScore = tf_idf.calculateSimilarityScore(tfidf_matrix_train)
+    # print(similarityScore)
