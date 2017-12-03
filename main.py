@@ -5,7 +5,7 @@ from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
 from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
-# from SimilarityComparissor.calculateTf_idf_CosineSimilarity import calculateTf_idf_CosineSimilarity
+from SimilarityComparissor.calculateTf_idf_CosineSimilarity import CalculateTf_idf_CosineSimilarity
 
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 
@@ -34,22 +34,22 @@ if __name__ == '__main__':
     replacedSynonyms = ReplacingSynonyms()
     synonymsReplacedList = replacedSynonyms.replacingSynonyms(tokensList)
     tokensList = synonymsReplacedList
-    print("Synonym replaced: %r\n" % synonymsReplacedList)
+    print("Synonym replaced: %r" % synonymsReplacedList)
+
+    print("Standardized Text: %r\n" % " ".join(tokensList))
+
+    stemming = StemmingSinhala()
+    tokensList = stemming.stem(tokensList)
+    print("Stemmed: %r" % tokensList)
+
+    print("Standardized Text: %r\n" % " ".join(tokensList))
 
     nGramCreator = CreateN_Grams()
     nGrams = nGramCreator.createN_Grams(tokensList, 3)
     print("N-Grams: %r\n" % nGrams)
 
-    # stemming = StemmingSinhala()
-    # standardizedTextList = stemming.stemminig(tokensList)
-    # tokensList = standadizedTextList
-    # print(standardizedTextList)
+    tf_idf = CalculateTf_idf_CosineSimilarity()
+    tfidf_matrix_train = tf_idf.calculateTf_idf(nGrams)
 
-    standadizedText = ' '.join(tokensList)
-    print("Standardized Text: %r\n" % standadizedText)
-
-    # tf_idf = calculateTf_idf_CosineSimilarity()
-    # tfidf_matrix_train = tf_idf.calculateTf_idf(standadizedText)
-
-    # similarityScore = tf_idf.calculateSimilarityScore(tfidf_matrix_train)
-    # print(similarityScore)
+    similarityScore = tf_idf.calculateSimilarityScore(tfidf_matrix_train)
+    print(similarityScore)

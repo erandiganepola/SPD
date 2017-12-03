@@ -35,9 +35,9 @@ tfidf.todense()
 
 f = open("para1.txt")
 doc1 = str.decode(f.read(), "UTF-8", "ignore")
-f = open("para2")
+f = open("para2.txt")
 doc2 = str.decode(f.read(), "UTF-8", "ignore")
-f = open("para3")
+f = open("para3.txt")
 doc3 = str.decode(f.read(), "UTF-8", "ignore")
 
 sentence = u'කැමරාව පමණක් අතැතිවය. මෙම ගමනේ අතිශය දුෂ්කර'.encode(
