@@ -11,14 +11,9 @@ def index(request):
 
 
 def compare(request):
-    data = request.POST
-    print(data)
-    doc1 = data['doc1']
-    doc2 = data['doc2']
-    doc1 = SPD.standardize(doc1)
-    doc2 = SPD.standardize(doc2)
+    docs = request.POST.getlist('docs[]')
 
     response = {
-        'similarities': SPD.compare([doc1, doc2])
+        'similarities': SPD.compare(docs)
     }
     return JsonResponse(response)

@@ -4,11 +4,22 @@ $(document).ready(function () {
 
 function compareDocs() {
     $(".alert").hide();
+    var docs = [];
+    $("textarea[name='doc[]']").each(function () {
+        docs.push(this.value);
+    });
+    console.log(docs);
 
-    var doc1 = $("#doc1").val();
-    var doc2 = $("#doc2").val();
-    if (!doc1 || !doc2 || doc1.length === 0 || doc2.length === 0) {
-        showError("Please insert two documents to compare");
+    var valid = true;
+    for (var x in docs) {
+        if (!docs[x] || docs[x].length === 0) {
+            valid = false;
+            break;
+        }
+    }
+
+    if (!valid) {
+        showError("Please insert all documents to compare");
         return;
     }
 
@@ -18,13 +29,12 @@ function compareDocs() {
         url: "/spd/compare",
         method: 'post',
         data: {
-            doc1: doc1,
-            doc2: doc2
+            docs: docs
         }
     }).done(function (data) {
         console.log(data);
-        sim = data.similarities;
-        text = "<ul>";
+        var sim = data.similarities;
+        var text = "<ul>";
         for (var i in sim) {
             for (var j in sim[i]) {
                 text += "<li> Doc " + i + " and Doc " + j + " -> " + sim[i][j].toFixed(2) + "</li>"
