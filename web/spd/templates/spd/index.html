@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Sinhala Plagiarism Detection</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "starter-template.css" %}" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">SPD</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="card">
+        <h3 class="card-header text-center">
+            Compare Documents
+        </h3>
+
+        <div class="card-block">
+
+            <div class="alert alert-danger" role="alert">
+                <strong>Oops!</strong>
+                <p id="errorMsg"></p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="doc1">Document 1</label>
+                        <textarea class="form-control" id="doc1" rows="3">අල්-නූරි ප්‍රධාන මුස්ලිම් දේවස්ථානය (جامع النوري) යනු,
+                            ඉරාකයෙහි මෝසල් නගරයෙහි පිහිටා තිබුණු මුස්ලිම් දේවස්ථානයකි. එහි ඇලවුණු මිනරෙටය නිසා එය ප්‍රසිද්ධයට පත්ව
+                            තිබුණු අතර, එම නිසාම නගරයට අපනාමයක් ලෙසින් "කුදා" (الحدباء al-Ḥadbāˈ) යන්න යෙදිණි. පසුකාලීන
+                            වර්ෂයන් තුල බොහෝ අළුත්වැඩියාවන්ට එය ලක් වුවද, සාම්ප්‍රදායික දැනුමෙහි ආකාරයට මෙම මුස්ලිම් දේවස්ථානය පළමුව
+                            තැනුණේ 12වන සියවසෙහි අග භාගයෙහිදීය. වසර 850 ක එහි ඉතිහාසය තුලදී බොහෝ සතුරු ආක්‍රමණකාරී බලකායන්
+                            හමුවේ එය විනාශයට පත් නොවී පැවතුනද, අවසන 2017 ජූනි 21 දිනදී ඉරාකයේ සහ ලෙවන්තයේ ඉස්ලාමීය රාජ්‍යය
+                            (අයිඑස්අයිඑල්) වෙතින්, මෝසල් සටන අතරතුරදී එය විනාශයට පත් විය.</textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="doc2">Document 2</label>
+                        <textarea class="form-control" id="doc2" rows="3">
+                            ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ඉන්කෝපරේටඩ් (ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ලෙසින් ශෛලිගත කෙරුණු, සරල
+                            ලෙසින් ෆොක්ස් ලෙසින් හැඳින්වෙන) යනු, නිව්යෝර්ක් නගරයෙහි මිඩ්ටවුන් මෑන්හැට්න්හී පිහිටා ඇති ඇමරිකානු
+                            බහුජාතික ජනමාධ්‍ය සංස්ථාවකි.
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare</button>
+        </div>
+    </div>
+
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="{% static "bootstrap.min.js" %}"></script>
+<script src="{% static "app.js" %}"></script>
+</body>
+</html>
