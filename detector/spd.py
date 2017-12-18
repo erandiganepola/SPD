@@ -3,6 +3,7 @@ from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 class SPD:
@@ -45,5 +46,11 @@ class SPD:
         return standardized_text
 
     @staticmethod
-    def compare(doc1, doc2):
-        return 0.01
+    def compare(docs):
+        documents = [doc for doc in docs]
+        tf_idf = TfidfVectorizer().fit_transform(documents)
+        # no need to normalize, since Vectorizer will return normalized tf-idf
+        pairwise_similarity = tf_idf * tf_idf.T
+        similarities = pairwise_similarity.toarray().tolist()
+        print(similarities)
+        return similarities

@@ -19,6 +19,6 @@ def compare(request):
     doc2 = SPD.standardize(doc2)
 
     response = {
-        'similarity': SPD.compare(doc1, doc2)
+        'similarities': SPD.compare([doc1, doc2])
     }
     return JsonResponse(response)
