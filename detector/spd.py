@@ -54,3 +54,12 @@ class SPD:
         similarities = pairwise_similarity.toarray().tolist()
         print(similarities)
         return similarities
+
+    @staticmethod
+    def compare_uploaded_files(files):
+        tf_idf = TfidfVectorizer().fit_transform(files)
+        # no need to normalize, since Vectorizer will return normalized tf-idf
+        pairwise_similarity = tf_idf * tf_idf.T
+        similarities = pairwise_similarity.toarray().tolist()
+        print(similarities)
+        return similarities
