@@ -27,11 +27,13 @@ def upload_multiple_docs(request):
     files = request.FILES
 
     standardize_docs = []
-    for key, value in files.items():
+    for value in files.getlist('file'):
+        print(value)
         read_file = value.read().decode("utf-8")
         standardize_docs.append(SPD.standardize(read_file))
 
-    response = {
-        'Similarities among multiple docs': SPD.compare_uploaded_files(standardize_docs)
+    template = loader.get_template("spd/index.html")
+    context = {
+        'similarities': SPD.compare_uploaded_files(standardize_docs)
     }
-    return JsonResponse(response)
+    return HttpResponse(template.render(context, request))

@@ -62,4 +62,27 @@ class SPD:
         pairwise_similarity = tf_idf * tf_idf.T
         similarities = pairwise_similarity.toarray().tolist()
         print(similarities)
-        return similarities
+        uniqueness = SPD.find_uniqueness(similarities)
+        return uniqueness
+
+    @staticmethod
+    def find_uniqueness(similarityList):
+        result_list = []
+        for i in similarityList:
+            uniqueness = 0.0
+            count = 0
+            for j in i:
+                if j > 0.99:
+                    uniqueness += 0.0
+                else:
+                    count += 1
+                    uniqueness = uniqueness + j
+                    output = uniqueness/count
+            if count == 0:
+                result_list.append(1.0)
+                output = 1.0
+            else:
+                result_list.append(output)
+            print(output)
+
+        return result_list

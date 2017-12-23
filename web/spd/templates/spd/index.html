@@ -41,7 +41,7 @@
 
     <div class="card">
         <h3 class="card-header text-center">
-            Compare Documents
+            Plagiarism Detection in Sinhala Documents
         </h3>
 
         <div class="card-block">
@@ -54,45 +54,18 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label>Document 1</label>
-                        <textarea class="form-control" name="doc[]" rows="5">අල්-නූරි ප්‍රධාන මුස්ලිම් දේවස්ථානය (جامع النوري) යනු,
-                            ඉරාකයෙහි මෝසල් නගරයෙහි පිහිටා තිබුණු මුස්ලිම් දේවස්ථානයකි. එහි ඇලවුණු මිනරෙටය නිසා එය ප්‍රසිද්ධයට පත්ව
-                            තිබුණු අතර, එම නිසාම නගරයට අපනාමයක් ලෙසින් "කුදා" (الحدباء al-Ḥadbāˈ) යන්න යෙදිණි. පසුකාලීන
-                            වර්ෂයන් තුල බොහෝ අළුත්වැඩියාවන්ට එය ලක් වුවද, සාම්ප්‍රදායික දැනුමෙහි ආකාරයට මෙම මුස්ලිම් දේවස්ථානය පළමුව
-                            තැනුණේ 12වන සියවසෙහි අග භාගයෙහිදීය. වසර 850 ක එහි ඉතිහාසය තුලදී බොහෝ සතුරු ආක්‍රමණකාරී බලකායන්
-                            හමුවේ එය විනාශයට පත් නොවී පැවතුනද, අවසන 2017 ජූනි 21 දිනදී ඉරාකයේ සහ ලෙවන්තයේ ඉස්ලාමීය රාජ්‍යය
-                            (අයිඑස්අයිඑල්) වෙතින්, මෝසල් සටන අතරතුරදී එය විනාශයට පත් විය.</textarea>
+                        <label>Enter Your Text Here</label>
+                        <textarea class="form-control" name="doc[]" rows="10">පරීක්ෂා කිරීමට අවශ්‍ය සිංහල වචන මාලාව මෙහි අන්තර්ගත කරන්න.</textarea>
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Document 2</label>
-                        <textarea class="form-control" name="doc[]" rows="5">
-                            ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ඉන්කෝපරේටඩ් (ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ලෙසින් ශෛලිගත කෙරුණු, සරල
-                            ලෙසින් ෆොක්ස් ලෙසින් හැඳින්වෙන) යනු, නිව්යෝර්ක් නගරයෙහි මිඩ්ටවුන් මෑන්හැට්න්හී පිහිටා ඇති ඇමරිකානු
-                            බහුජාතික ජනමාධ්‍ය සංස්ථාවකි.
-                        </textarea>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Document 3</label>
-                        <textarea class="form-control" name="doc[]" rows="5">
-                            ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ඉන්කෝපරේටඩ් (ට්වෙන්ටිවර්ස්ට් සෙන්චරි ෆොක්ස් ලෙසින් ශෛලිගත කෙරුණු, සරල
-                            ලෙසින් ෆොක්ස් ලෙසින් හැඳින්වෙන) යනු, නිව්යෝර්ක් නගරයෙහි මිඩ්ටවුන් මෑන්හැට්න්හී පිහිටා ඇති ඇමරිකානු
-                            බහුජාතික ජනමාධ්‍ය සංස්ථාවකි.
-                        </textarea>
-                    </div>
-                </div>
             </div>
         </div>
 
         <div class="card-footer">
-            <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare</button>
+            <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare / සසඳන්න </button>
         </div>
     </div>
 
@@ -114,11 +87,23 @@
                 <p id="errorMsg"></p>
             </div>
 
+            <div class="jumbotron">
+                {% if similarities %}
+                    <ul>
+                        {% for s in similarities %}
+                            <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි අමුණන්න.</p>
+                {% endif %}
+            </div>
+
             <div class="row">
 
                 <!-- Start: uploading multiple files -->
                 <form action="/spd/uploadMultipleDocs" method="post" enctype="multipart/form-data">
-                    Select files: <input type="file" id="myFile" name="file" multiple>
+                    Select files: <input type="file" accept="text/plain" id="myFile" name="file" multiple required>
                     <input type="submit">
                 </form>
                 <p id="demo"></p>
@@ -127,12 +112,7 @@
 
             </div>
         </div>
-
-        <div class="card-footer">
-            <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare</button>
-        </div>
     </div>
-
 </div><!-- /. end of container for file uploads-->
 
 
