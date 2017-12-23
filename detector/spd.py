@@ -1,9 +1,10 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
+from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
-from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 class SPD:
@@ -66,23 +67,15 @@ class SPD:
         return uniqueness
 
     @staticmethod
-    def find_uniqueness(similarityList):
+    def find_uniqueness(similarity_list):
         result_list = []
-        for i in similarityList:
-            uniqueness = 0.0
-            count = 0
-            for j in i:
-                if j > 0.99:
-                    uniqueness += 0.0
-                else:
-                    count += 1
-                    uniqueness = uniqueness + j
-                    output = uniqueness/count
-            if count == 0:
-                result_list.append(1.0)
-                output = 1.0
-            else:
-                result_list.append(output)
-            print(output)
+        count = len(similarity_list) - 1
+
+        for index in range(0, len(similarity_list)):
+            similarities = [x for i, x in enumerate(similarity_list[index]) if i != index]
+            uniqueness = round(1 - max(similarities), 2)
+
+            print(uniqueness)
+            result_list.append(uniqueness)
 
         return result_list

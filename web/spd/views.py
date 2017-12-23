@@ -24,16 +24,17 @@ def compare(request):
 
 
 def upload_multiple_docs(request):
-    files = request.FILES
+    files = request.FILES.getlist('file')
 
     standardize_docs = []
-    for value in files.getlist('file'):
+    for value in files:
         print(value)
         read_file = value.read().decode("utf-8")
         standardize_docs.append(SPD.standardize(read_file))
 
     template = loader.get_template("spd/index.html")
+    similarities = SPD.compare_uploaded_files(standardize_docs)
     context = {
-        'similarities': SPD.compare_uploaded_files(standardize_docs)
+        'uniqueness': [[files[i].name, x] for i, x in enumerate(similarities)]
     }
     return HttpResponse(template.render(context, request))

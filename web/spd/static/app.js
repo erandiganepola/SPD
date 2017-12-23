@@ -1,9 +1,12 @@
 $(document).ready(function () {
-    $(".alert").hide();
+    $('#successBox').hide();
+    $('#errorBox').hide();
 });
 
 function compareDocs() {
-    $(".alert").hide();
+    $('#successBox').hide();
+    $('#errorBox').hide();
+
     var docs = [];
     $("textarea[name='doc[]']").each(function () {
         docs.push(this.value);

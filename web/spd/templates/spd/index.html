@@ -38,79 +38,101 @@
 </nav>
 
 <div class="container-fluid">
+    <div class="col-md-8 offset-md-2">
 
-    <div class="card">
-        <h3 class="card-header text-center">
-            Plagiarism Detection in Sinhala Documents
-        </h3>
+        <div class="card">
+            <h3 class="card-header text-center">
+                Plagiarism Detection in Sinhala Documents
+            </h3>
 
-        <div class="card-block">
+            <div class="card-block">
 
-            <div class="alert alert-success" role="alert" id="successBox"></div>
+                <div class="alert alert-success" role="alert" id="successBox"></div>
 
-            <div class="alert alert-danger" role="alert" id="errorBox">
-                <strong>Oops!</strong>
-                <p id="errorMsg"></p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Enter Your Text Here</label>
-                        <textarea class="form-control" name="doc[]" rows="10">පරීක්ෂා කිරීමට අවශ්‍ය සිංහල වචන මාලාව මෙහි අන්තර්ගත කරන්න.</textarea>
-                    </div>
+                <div class="alert alert-danger" role="alert" id="errorBox">
+                    <strong>Oops!</strong>
+                    <p id="errorMsg"></p>
                 </div>
 
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Enter Your Text Here</label>
+                            <textarea class="form-control" name="doc[]"
+                                      placeholder="පරීක්ෂා කිරීමට අවශ්‍ය සිංහල වචන මාලාව මෙහි අන්තර්ගත කරන්න."
+                                      rows="5"></textarea>
+                        </div>
+                    </div>
 
-        <div class="card-footer">
-            <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare / සසඳන්න </button>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare / සසඳන්න</button>
+            </div>
         </div>
     </div>
 
 </div><!-- /.container for file uploads -->
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
 
-    <div class="card">
-        <h3 class="card-header text-center">
-            Upload Multiple Documents to Compare
-        </h3>
+    <div class="col-md-8 offset-md-2">
 
-        <div class="card-block">
+        <div class="card">
+            <h3 class="card-header text-center">
+                Upload Multiple Documents to Compare
+            </h3>
 
-            <div class="alert alert-success" role="alert" id="successBox"></div>
+            <form action="/spd/uploadMultipleDocs" method="post" enctype="multipart/form-data">
 
-            <div class="alert alert-danger" role="alert" id="errorBox">
-                <strong>Oops!</strong>
-                <p id="errorMsg"></p>
-            </div>
+                <div class="card-block">
 
-            <div class="jumbotron">
-                {% if similarities %}
-                    <ul>
-                        {% for s in similarities %}
-                            <li>{{ s }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි අමුණන්න.</p>
-                {% endif %}
-            </div>
+                    <div class="alert alert-success" role="alert" id="successBox"></div>
 
-            <div class="row">
+                    <div class="alert alert-danger" role="alert" id="errorBox">
+                        <strong>Oops!</strong>
+                        <p id="errorMsg"></p>
+                    </div>
 
-                <!-- Start: uploading multiple files -->
-                <form action="/spd/uploadMultipleDocs" method="post" enctype="multipart/form-data">
-                    Select files: <input type="file" accept="text/plain" id="myFile" name="file" multiple required>
-                    <input type="submit">
-                </form>
-                <p id="demo"></p>
-                <p><strong>Use the Control or the Shift key to select multiple files.</strong></p>
-                <!-- End: uploading multiple files -->
+                    <p>
+                        {% if uniqueness %}
+                            <ul>
+                                {% for doc in uniqueness %}
+                                    <li>
+                                        {% for val in doc %}
+                                            {{ val }} &nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endfor %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
+                                අමුණන්න.</p>
+                        {% endif %}
+                    </p>
 
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Select Files</label>
+                                <input type="file" accept="text/plain" class="form-control" name="file" multiple
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <p><strong>Use the Control or the Shift key to select multiple files.</strong></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-primary pull-right" type="submit">Compare / සසඳන්න</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div><!-- /. end of container for file uploads-->
