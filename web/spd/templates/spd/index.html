@@ -26,54 +26,16 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">SPD</a>
+    <a class="navbar-brand" href="#">Sinhala Plagiarism Detection</a>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
+    {#    <div class="collapse navbar-collapse" id="navbarsExampleDefault">#}
+    {#        <ul class="navbar-nav mr-auto">#}
+    {#            <li class="nav-item active">#}
+    {#                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
 </nav>
-
-<div class="container-fluid">
-    <div class="col-md-8 offset-md-2">
-
-        <div class="card">
-            <h3 class="card-header text-center">
-                Plagiarism Detection in Sinhala Documents
-            </h3>
-
-            <div class="card-block">
-
-                <div class="alert alert-success" role="alert" id="successBox"></div>
-
-                <div class="alert alert-danger" role="alert" id="errorBox">
-                    <strong>Oops!</strong>
-                    <p id="errorMsg"></p>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Enter Your Text Here</label>
-                            <textarea class="form-control" name="doc[]"
-                                      placeholder="පරීක්ෂා කිරීමට අවශ්‍ය සිංහල වචන මාලාව මෙහි අන්තර්ගත කරන්න."
-                                      rows="5"></textarea>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare / සසඳන්න</button>
-            </div>
-        </div>
-    </div>
-
-</div><!-- /.container for file uploads -->
 
 <div class="container-fluid mt-5">
 
@@ -88,30 +50,50 @@
 
                 <div class="card-block">
 
-                    <div class="alert alert-success" role="alert" id="successBox"></div>
+                    <div class="alert alert-success" role="alert" id="successBox">
+                        {% if results and docs %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card border-success h-100">
+                                        <h3 class="card-header">Uniqueness</h3>
+                                        <div class="card-block">
+                                            <ul>
+                                                {% for result in results %}
+                                                    <li>
+                                                        {{ result.file }} - {{ result.uniqueness }}%
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border-success h-100">
+                                        <h3 class="card-header">Most similar docs</h3>
+                                        <div class="card-block">
+                                            <ul>
+                                                {% for doc in docs %}
+                                                    <li>
+                                                        {{ doc.file }}
+                                                        <ul>
+                                                            {% for similarity in doc.similarities %}
+                                                                <li>{{ similarity.file }} - {{ similarity.similarity }}%
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="alert alert-danger" role="alert" id="errorBox">
-                        <strong>Oops!</strong>
-                        <p id="errorMsg"></p>
-                    </div>
-
-                    <p>
-                        {% if uniqueness %}
-                            <ul>
-                                {% for doc in uniqueness %}
-                                    <li>
-                                        {% for val in doc %}
-                                            {{ val }} &nbsp;&nbsp;&nbsp;&nbsp;
-                                        {% endfor %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
                         {% else %}
                             <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
                                 අමුණන්න.</p>
                         {% endif %}
-                    </p>
-
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -121,11 +103,9 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-
                             <p><strong>Use the Control or the Shift key to select multiple files.</strong></p>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="card-footer">
@@ -146,6 +126,6 @@
         integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>
 <script src="{% static "bootstrap.min.js" %}"></script>
-<script src="{% static "app.js" %}"></script>
+{#<script src="{% static "app.js" %}"></script>#}
 </body>
 </html>

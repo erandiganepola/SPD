@@ -25,7 +25,7 @@ def compare(request):
 
 def upload_multiple_docs(request):
     files = request.FILES.getlist('file')
-
+    file_names = [f.name for f in files]
     standardize_docs = []
     for value in files:
         print(value)
@@ -33,8 +33,9 @@ def upload_multiple_docs(request):
         standardize_docs.append(SPD.standardize(read_file))
 
     template = loader.get_template("spd/index.html")
-    similarities = SPD.compare_uploaded_files(standardize_docs)
+    uniqueness, docs = SPD.compare_uploaded_files(standardize_docs, file_names)
     context = {
-        'uniqueness': [[files[i].name, x] for i, x in enumerate(similarities)]
+        'results': uniqueness,
+        'docs': docs
     }
     return HttpResponse(template.render(context, request))

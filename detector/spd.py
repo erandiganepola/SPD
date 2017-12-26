@@ -57,25 +57,54 @@ class SPD:
         return similarities
 
     @staticmethod
-    def compare_uploaded_files(files):
+    def compare_uploaded_files(files, file_names):
         tf_idf = TfidfVectorizer().fit_transform(files)
         # no need to normalize, since Vectorizer will return normalized tf-idf
         pairwise_similarity = tf_idf * tf_idf.T
         similarities = pairwise_similarity.toarray().tolist()
-        print(similarities)
+
         uniqueness = SPD.find_uniqueness(similarities)
-        return uniqueness
+        uniqueness = [
+            {
+                'file': file_names[i],
+                'uniqueness': round(x * 100, 2)
+            } for i, x in enumerate(uniqueness)
+        ]
+        print(uniqueness)
+
+        docs = [
+            {
+                'file': file_names[i],
+                'similarities': [
+                    {
+                        'file': file_names[j],
+                        'similarity': round(y * 100, 2)
+                    } for j, y in enumerate(x)
+                ]
+            } for i, x in enumerate(similarities)
+        ]
+
+        docs = SPD.find_closest_files(docs)
+        print(docs)
+
+        return uniqueness, docs
 
     @staticmethod
     def find_uniqueness(similarity_list):
         result_list = []
-        count = len(similarity_list) - 1
 
         for index in range(0, len(similarity_list)):
             similarities = [x for i, x in enumerate(similarity_list[index]) if i != index]
-            uniqueness = round(1 - max(similarities), 2)
+            uniqueness = 1 - max(similarities)
 
             print(uniqueness)
             result_list.append(uniqueness)
 
         return result_list
+
+    @staticmethod
+    def find_closest_files(docs):
+        for doc in docs:
+            doc['similarities'] = sorted(doc['similarities'], key=lambda k: k['similarity'], reverse=True)
+            doc['similarities'] = [x for x in doc['similarities'] if x['file'] != doc['file']][0:1]
+        return docs
