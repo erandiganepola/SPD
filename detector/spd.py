@@ -5,6 +5,7 @@ from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeU
 from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
+import itertools
 
 
 class SPD:
@@ -73,9 +74,30 @@ class SPD:
 
         for index in range(0, len(similarity_list)):
             similarities = [x for i, x in enumerate(similarity_list[index]) if i != index]
-            uniqueness = round(1 - max(similarities), 2)
+            uniqueness = round((1 - max(similarities)) * 100, 0)
 
             print(uniqueness)
             result_list.append(uniqueness)
+
+        SPD.find_suspicious_docs(1, 2, similarity_list)
+
+        return result_list
+
+    @staticmethod
+    def find_suspicious_docs(list_row, num_of_suspicious_docs, similarity_list):
+        result_list = []
+        similarities = []
+        list = []
+
+        for index in range(0, len(similarity_list)):
+            if index == list_row:
+                similarities = [x for i, x in enumerate(similarity_list[index]) if i != index]
+                print(similarities)
+                break
+
+        similarities = sorted(similarities)
+
+        result_list = similarities[-num_of_suspicious_docs:]
+        print(result_list)
 
         return result_list
