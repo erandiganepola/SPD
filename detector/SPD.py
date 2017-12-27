@@ -42,23 +42,31 @@ class SPD:
         tokens_list = stemming.stem(tokens_list)
         print("Stemmed: %r" % tokens_list)
 
-        standardized_text = " ".join(tokens_list);
+        standardized_text = " ".join(tokens_list)
         print("Standardized Text: %r" % standardized_text)
         return standardized_text
 
     @staticmethod
     def compare(docs):
-        documents = [doc for doc in docs]
+        documents = [x['standardized_content'] for x in docs]
         tf_idf = TfidfVectorizer().fit_transform(documents)
         # no need to normalize, since Vectorizer will return normalized tf-idf
         pairwise_similarity = tf_idf * tf_idf.T
-        similarities = pairwise_similarity.toarray().tolist()
-        print(similarities)
-        return similarities
+        # All I want is the last row
+        similarities = pairwise_similarity.toarray().tolist()[-1][:-1]
+
+        results = []
+        for i, x in enumerate(similarities):
+            results.append({
+                'name': docs[i]['name'],
+                'similarity': round(x * 100, 2)
+            })
+        return results
 
     @staticmethod
-    def compare_uploaded_files(files, file_names):
-        tf_idf = TfidfVectorizer().fit_transform(files)
+    def compare_uploaded_files(docs):
+        texts = [x['text'] for x in docs]
+        tf_idf = TfidfVectorizer().fit_transform(texts)
         # no need to normalize, since Vectorizer will return normalized tf-idf
         pairwise_similarity = tf_idf * tf_idf.T
         similarities = pairwise_similarity.toarray().tolist()
@@ -66,7 +74,7 @@ class SPD:
         uniqueness = SPD.find_uniqueness(similarities)
         uniqueness = [
             {
-                'file': file_names[i],
+                'file': docs[i]['name'],
                 'uniqueness': round(x * 100, 2)
             } for i, x in enumerate(uniqueness)
         ]
@@ -74,10 +82,10 @@ class SPD:
 
         docs = [
             {
-                'file': file_names[i],
+                'file': docs[i]['name'],
                 'similarities': [
                     {
-                        'file': file_names[j],
+                        'file': docs[j]['name'],
                         'similarity': round(y * 100, 2)
                     } for j, y in enumerate(x)
                 ]

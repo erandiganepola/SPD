@@ -1,5 +1,5 @@
 from Test.readDocuments import ReadDocuments
-from detector.spd import SPD
+from detector import SPD
 
 if __name__ == '__main__':
 

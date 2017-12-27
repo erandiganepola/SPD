@@ -37,10 +37,56 @@
     {#    </div>#}
 </nav>
 
-<div class="container-fluid mt-5">
-
+<div class="container-fluid">
     <div class="col-md-8 offset-md-2">
 
+        <div class="card">
+            <h3 class="card-header text-center">
+                Plagiarism Detection in Sinhala Documents
+            </h3>
+
+            <form action="/spd/compare" method="post" enctype="multipart/form-data">
+                <div class="card-block">
+
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            <p>
+                                {{ error }}
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    {% if similarities %}
+                        <div class="alert alert-success">
+                            <ul>
+                                {% for sim in similarities %}
+                                    <li>{{ sim.name }} -> {{ sim.similarity }}%</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Enter Your Text Here</label>
+                                <input type="file" accept="text/plain" class="form-control" name="doc" required>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-primary pull-right" onclick="compareDocs()">Compare / සසඳන්න</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /.container for file uploads -->
+
+<div class="container-fluid mt-5">
+    <div class="col-md-8 offset-md-2">
         <div class="card">
             <h3 class="card-header text-center">
                 Upload Multiple Documents to Compare

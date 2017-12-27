@@ -1,7 +1,11 @@
-from django.http import HttpResponse, JsonResponse
-from django.template import loader
+from time import timezone
 
-from detector.spd import SPD
+from django.http import HttpResponse
+from django.template import loader
+from django.utils import timezone
+
+from detector.SPD import SPD
+from .models import Doc
 
 
 def index(request):
@@ -11,29 +15,60 @@ def index(request):
 
 
 def compare(request):
-    docs = request.POST.getlist('docs[]')
-    standardize_docs = []
+    doc = request.FILES.get('doc')
+    text = doc.read().decode("utf-8")
+    std_text = SPD.standardize(text)
 
-    for i in docs:
-        standardize_docs.append(SPD.standardize(i))
+    template = loader.get_template("spd/index.html")
 
-    response = {
-        'similarities': SPD.compare(standardize_docs)
+    try:
+        docs = Doc.objects.all().filter(name=doc.name).filter(content=text).get()
+        print("Found same doc - %s" % docs)
+        context = {
+            'error': 'The same document is available in our database. Please upload another.'
+        }
+        return HttpResponse(template.render(context, request))
+    except Exception as a:
+        print(a)
+
+    try:
+        docs = Doc.objects.all().values('name', 'standardized_content')
+        docs = list(docs)
+    except Exception as e:
+        print(e)
+        docs = []
+
+    print("Available docs are - %s" % docs)
+
+    # Add the new one now
+    d = Doc(name=doc.name, content=text, standardized_content=std_text, created_at=timezone.now())
+    d.save()
+    print("Doc added - %s" % doc.name)
+    docs.append({
+        'name': doc.name,
+        'standardized_content': std_text
+    })
+
+    similarities = SPD.compare(docs)
+    context = {
+        'similarities': similarities
     }
-    return JsonResponse(response)
+    return HttpResponse(template.render(context, request))
 
 
 def upload_multiple_docs(request):
     files = request.FILES.getlist('file')
-    file_names = [f.name for f in files]
-    standardize_docs = []
-    for value in files:
-        print(value)
-        read_file = value.read().decode("utf-8")
-        standardize_docs.append(SPD.standardize(read_file))
+    documents = []
+    for f in files:
+        print(f)
+        read_file = f.read().decode("utf-8")
+        documents.append({
+            'name': f.name,
+            'text': SPD.standardize(read_file)
+        })
 
     template = loader.get_template("spd/index.html")
-    uniqueness, docs = SPD.compare_uploaded_files(standardize_docs, file_names)
+    uniqueness, docs = SPD.compare_uploaded_files(documents)
     context = {
         'results': uniqueness,
         'docs': docs
