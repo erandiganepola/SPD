@@ -3,6 +3,7 @@ from time import timezone
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
+from django.utils.encoding import smart_text
 
 from detector.SPD import SPD
 from .models import Doc
@@ -16,7 +17,7 @@ def index(request):
 
 def compare(request):
     doc = request.FILES.get('doc')
-    text = doc.read().decode("utf-8")
+    text = smart_text(doc.read())
     std_text = SPD.standardize(text)
 
     template = loader.get_template("spd/index.html")

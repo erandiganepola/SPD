@@ -42,12 +42,16 @@
 
         <div class="card">
             <h3 class="card-header text-center">
-                Plagiarism Detection in Sinhala Documents
+                Universal Plagiarism Detection
             </h3>
 
             <form action="/spd/compare" method="post" enctype="multipart/form-data">
                 <div class="card-block">
 
+                    <div class="alert alert-info">
+                        <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
+                            අමුණන්න.</p>
+                    </div>
                     {% if error %}
                         <div class="alert alert-danger">
                             <p>
@@ -96,8 +100,9 @@
 
                 <div class="card-block">
 
-                    <div class="alert alert-success" role="alert" id="successBox">
-                        {% if results and docs %}
+                    {% if results and docs %}
+                        <div class="alert alert-success" role="alert" id="successBox">
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="card border-success h-100">
@@ -134,12 +139,13 @@
                                     </div>
                                 </div>
                             </div>
-
-                        {% else %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
                             <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
                                 අමුණන්න.</p>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

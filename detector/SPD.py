@@ -5,6 +5,7 @@ from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeU
 from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
+from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 
 
 class SPD:
@@ -42,7 +43,11 @@ class SPD:
         tokens_list = stemming.stem(tokens_list)
         print("Stemmed: %r" % tokens_list)
 
-        standardized_text = " ".join(tokens_list)
+        n_grams = CreateN_Grams()
+        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        print("Stemmed: %r" % n_gram_list)
+
+        standardized_text = " ".join(n_gram_list)
         print("Standardized Text: %r" % standardized_text)
         return standardized_text
 
@@ -77,7 +82,7 @@ class SPD:
                 'file': docs[i]['name'],
                 'uniqueness': round(x * 100, 2)
             } for i, x in enumerate(uniqueness)
-        ]
+            ]
         print(uniqueness)
 
         docs = [
@@ -88,9 +93,9 @@ class SPD:
                         'file': docs[j]['name'],
                         'similarity': round(y * 100, 2)
                     } for j, y in enumerate(x)
-                ]
+                    ]
             } for i, x in enumerate(similarities)
-        ]
+            ]
 
         docs = SPD.find_closest_files(docs)
         print(docs)
@@ -103,7 +108,7 @@ class SPD:
 
         for index in range(0, len(similarity_list)):
             similarities = [x for i, x in enumerate(similarity_list[index]) if i != index]
-            uniqueness = 1 - max(similarities)
+            uniqueness = 1 - (max(similarities) if len(similarities) > 0 else 0)
 
             print(uniqueness)
             result_list.append(uniqueness)
