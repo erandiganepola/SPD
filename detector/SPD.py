@@ -43,11 +43,11 @@ class SPD:
         tokens_list = stemming.stem(tokens_list)
         print("Stemmed: %r" % tokens_list)
 
-        n_grams = CreateN_Grams()
-        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
-        print("Stemmed: %r" % n_gram_list)
+        #n_grams = CreateN_Grams()
+        #n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        #print("Stemmed: %r" % n_gram_list)
 
-        standardized_text = " ".join(n_gram_list)
+        standardized_text = " ".join(tokens_list)
         print("Standardized Text: %r" % standardized_text)
         return standardized_text
 

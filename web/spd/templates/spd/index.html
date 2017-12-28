@@ -26,7 +26,7 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Sinhala Plagiarism Detection</a>
+    <a class="navbar-brand" href="#">SPD</a>
 
     {#    <div class="collapse navbar-collapse" id="navbarsExampleDefault">#}
     {#        <ul class="navbar-nav mr-auto">#}
@@ -37,19 +37,26 @@
     {#    </div>#}
 </nav>
 
+<div class="alert alert-info">
+    <h3 class="card-header text-center">
+        Sinhala Plagiarism Detection / සිංහල රචනා චෞරත්වය අනාවරණය
+    </h3>
+</div>
+
 <div class="container-fluid">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
 
         <div class="card">
-            <h3 class="card-header text-center">
-                Universal Plagiarism Detection
-            </h3>
+            <h4 class="card-header text-center">
+                Compare with the Sinhala Corpus / සිංහල සංග්‍රහය හා සැසඳීම
+            </h4>
 
             <form action="/spd/compare" method="post" enctype="multipart/form-data">
                 <div class="card-block">
 
                     <div class="alert alert-info">
-                        <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
+                        <p>Please upload files to compare similarity with the Sinhala corpus/ සිංහල සංග්‍රහය හා සැසඳීමට
+                            අවශ්‍ය ලිපිගොනු මෙහි
                             අමුණන්න.</p>
                     </div>
                     {% if error %}
@@ -73,8 +80,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Enter Your Text Here</label>
+                                <label>Select Your Files to Compare</label>
                                 <input type="file" accept="text/plain" class="form-control" name="doc" required>
+                            </div>
+                            <div class="col-md-12">
+                                <p><strong>Use the Control or the Shift key to select multiple files.</strong></p>
                             </div>
                         </div>
 
@@ -90,11 +100,11 @@
 </div><!-- /.container for file uploads -->
 
 <div class="container-fluid mt-5">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
         <div class="card">
-            <h3 class="card-header text-center">
-                Upload Multiple Documents to Compare
-            </h3>
+            <h4 class="card-header text-center">
+                Compare among Uploaded Documents / ලිපි ගොණු අතර සැසඳීම
+            </h4>
 
             <form action="/spd/uploadMultipleDocs" method="post" enctype="multipart/form-data">
 
@@ -106,7 +116,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="card border-success h-100">
-                                        <h3 class="card-header">Uniqueness</h3>
+                                        <h3 class="card-header">Uniqueness (අනන්‍යතාවය)</h3>
                                         <div class="card-block">
                                             <ul>
                                                 {% for result in results %}
@@ -120,7 +130,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card border-success h-100">
-                                        <h3 class="card-header">Most similar docs</h3>
+                                        <h3 class="card-header">Similarity (Suspicious Docs) සමතාව (සැක සහිත ලිපි)</h3>
                                         <div class="card-block">
                                             <ul>
                                                 {% for doc in docs %}
@@ -142,14 +152,15 @@
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            <p>Please upload files to compare similarity / සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
+                            <p>Please upload files to compare similarity among uploaded documents/ ලිපි ගොණු එකිනෙක අතර
+                                සැසඳීමට අවශ්‍ය සිංහල ලිපිගොනු මෙහි
                                 අමුණන්න.</p>
                         </div>
                     {% endif %}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Select Files</label>
+                                <label>Select Your Files to Compare</label>
                                 <input type="file" accept="text/plain" class="form-control" name="file" multiple
                                        required>
                             </div>
