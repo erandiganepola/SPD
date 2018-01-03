@@ -32,6 +32,10 @@ class SPD:
         tokens_list = output
         print("Removed stop words: %r" % output)
 
+        stemming = StemmingSinhala()
+        tokens_list = stemming.stem(tokens_list)
+        print("Stemmed: %r" % tokens_list)
+
         replaced_synonyms = ReplacingSynonyms()
         synonyms_replaced_list = replaced_synonyms.replacingSynonyms(tokens_list)
         tokens_list = synonyms_replaced_list
@@ -39,13 +43,9 @@ class SPD:
 
         print("Standardized Text: %r" % " ".join(tokens_list))
 
-        stemming = StemmingSinhala()
-        tokens_list = stemming.stem(tokens_list)
-        print("Stemmed: %r" % tokens_list)
-
-        #n_grams = CreateN_Grams()
-        #n_gram_list = n_grams.createN_Grams(tokens_list, 3)
-        #print("Stemmed: %r" % n_gram_list)
+        n_grams = CreateN_Grams()
+        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        print("N-grams: %r" % n_gram_list)
 
         standardized_text = " ".join(tokens_list)
         print("Standardized Text: %r" % standardized_text)
