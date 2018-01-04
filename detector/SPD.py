@@ -1,20 +1,20 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+from Preprocessor.QuoteRemover import QuoteRemover
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
-from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 
 
 class SPD:
     @staticmethod
     def standardize(doc):
-        text = doc
-        print("Input: %r" % text)
+        print("Input: %r" % doc)
 
-        # TODO replace text between quotation marks by replacing with ""
+        text = QuoteRemover.remove_quotes(doc)
+        print("Removed quotes: %r" % text)
 
         remove_unnecessary = removeUnnecessaryChars()
         text = remove_unnecessary.removePunctuation(text)

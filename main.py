@@ -1,55 +1,8 @@
 import io
 
-from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
-from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
-from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
-from Preprocessor.tokenizing.TokenizeText import TokenizeText
-from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
-from SimilarityComparissor.calculateTf_idf_CosineSimilarity import CalculateTf_idf_CosineSimilarity
+from Preprocessor.QuoteRemover import QuoteRemover
 
-from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
-
-if __name__ == '__main__':
-    text = io.open('Test/para1.txt', 'r', encoding='utf-16').read()
-    print("Input: %r\n" % text)
-
-    # TODO replace text between quotation marks by replacing with ""
-
-    removeUnnecessary = removeUnnecessaryChars()
-    text = removeUnnecessary.removePunctuation(text)
-    print("Removed punctuations: %r\n" % text)
-
-    text = removeUnnecessary.replaceNumbers(text)
-    print("Numbers replaced: %r\n" % text)
-
-    tokenizer = TokenizeText()
-    tokensList = tokenizer.tokenizeText(text)
-    print("Tokens: %r\n" % tokensList)
-
-    stopWordsRemover = RemovingStopWords()
-    output = stopWordsRemover.removeStopwords(tokensList)
-    tokensList = output
-    print("Removed stop words: %r\n" % output)
-
-    replacedSynonyms = SynonymReplacer()
-    synonymsReplacedList = replacedSynonyms.replace_synonyms(tokensList)
-    tokensList = synonymsReplacedList
-    print("Synonym replaced: %r" % synonymsReplacedList)
-
-    print("Standardized Text: %r\n" % " ".join(tokensList))
-
-    stemming = StemmingSinhala()
-    tokensList = stemming.stem(tokensList)
-    print("Stemmed: %r" % tokensList)
-
-    print("Standardized Text: %r\n" % " ".join(tokensList))
-
-    nGramCreator = CreateN_Grams()
-    nGrams = nGramCreator.createN_Grams(tokensList, 3)
-    print("N-Grams: %r\n" % nGrams)
-
-    tf_idf = CalculateTf_idf_CosineSimilarity()
-    tfidf_matrix_train = tf_idf.calculateTf_idf(nGrams)
-
-    similarityScore = tf_idf.calculateSimilarityScore(tfidf_matrix_train)
-    print(similarityScore)
+txt = io.open("/home/imesha/Desktop/para1.txt").read()
+print(txt)
+txt = QuoteRemover.remove_quotes(txt)
+print(txt)
