@@ -1,7 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from Preprocessor.QuoteRemover import QuoteRemover
-from Preprocessor.creatingN_Grams import CreateN_Grams
+from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
@@ -42,8 +42,7 @@ class SPD:
         tokens_list = synonyms_replaced_list
         print("Synonym replaced: %r" % synonyms_replaced_list)
 
-        n_grams = CreateN_Grams()
-        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        n_gram_list = CreateN_Grams.createN_Grams(tokens_list, 3)
         print("N-grams: %r" % n_gram_list)
 
         standardized_text = " ".join(tokens_list)
@@ -59,9 +58,14 @@ class SPD:
         # All I want is the last row
         similarities = pairwise_similarity.toarray().tolist()[-1][:-1]
 
-        results = []
+        uniquenesses = [1 - x for x in similarities]
+        results = {
+            'similarities': [],
+            'uniqueness': round(min(uniquenesses) * 100, 2) if len(uniquenesses) > 0 else 100
+        }
+
         for i, x in enumerate(similarities):
-            results.append({
+            results['similarities'].append({
                 'name': docs[i]['name'],
                 'similarity': round(x * 100, 2)
             })

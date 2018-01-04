@@ -26,7 +26,7 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">SPD</a>
+    <a class="navbar-brand" href="/spd">SPD</a>
 
     {#    <div class="collapse navbar-collapse" id="navbarsExampleDefault">#}
     {#        <ul class="navbar-nav mr-auto">#}
@@ -56,8 +56,7 @@
 
                     <div class="alert alert-info">
                         <p>Please upload files to compare similarity with the Sinhala corpus/ සිංහල සංග්‍රහය හා සැසඳීමට
-                            අවශ්‍ය ලිපිගොනු මෙහි
-                            අමුණන්න.</p>
+                            අවශ්‍ය ලිපිගොනු මෙහි අමුණන්න.</p>
                     </div>
                     {% if error %}
                         <div class="alert alert-danger">
@@ -74,6 +73,12 @@
                                     <li>{{ sim.name }} -> {{ sim.similarity }}%</li>
                                 {% endfor %}
                             </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if uniqueness %}
+                        <div class="alert alert-success">
+                            <p>Uniqueness is : <strong>{{ uniqueness }}%</strong></p>
                         </div>
                     {% endif %}
 

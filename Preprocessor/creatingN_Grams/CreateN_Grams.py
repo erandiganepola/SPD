@@ -2,7 +2,9 @@ from nltk import ngrams
 
 
 class CreateN_Grams:
-    def createN_Grams(self, list, ngramValue):
+
+    @staticmethod
+    def createN_Grams(list, ngramValue):
         ngramArray = []
         n = ngramValue
 

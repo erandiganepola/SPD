@@ -51,10 +51,7 @@ def compare(request):
     })
 
     similarities = SPD.compare(docs)
-    context = {
-        'similarities': similarities
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(similarities, request))
 
 
 def upload_multiple_docs(request):
