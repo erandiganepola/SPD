@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from Preprocessor.QuoteRemover import QuoteRemover
+from Preprocessor.creatingN_Grams import CreateN_Grams
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
 from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
