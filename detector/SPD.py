@@ -41,9 +41,9 @@ class SPD:
         tokens_list = synonyms_replaced_list
         print("Synonym replaced: %r" % synonyms_replaced_list)
 
-        # n_grams = CreateN_Grams()
-        # n_gram_list = n_grams.createN_Grams(tokens_list, 3)
-        # print("N-grams: %r" % n_gram_list)
+        n_grams = CreateN_Grams()
+        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        print("N-grams: %r" % n_gram_list)
 
         standardized_text = " ".join(tokens_list)
         print("Standardized Text: %r" % standardized_text)
