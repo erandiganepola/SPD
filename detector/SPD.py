@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
-from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
+from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
 from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
@@ -36,16 +36,14 @@ class SPD:
         tokens_list = stemming.stem(tokens_list)
         print("Stemmed: %r" % tokens_list)
 
-        replaced_synonyms = ReplacingSynonyms()
-        synonyms_replaced_list = replaced_synonyms.replacingSynonyms(tokens_list)
+        replaced_synonyms = SynonymReplacer()
+        synonyms_replaced_list = replaced_synonyms.replace_synonyms(tokens_list)
         tokens_list = synonyms_replaced_list
         print("Synonym replaced: %r" % synonyms_replaced_list)
 
-        print("Standardized Text: %r" % " ".join(tokens_list))
-
-        n_grams = CreateN_Grams()
-        n_gram_list = n_grams.createN_Grams(tokens_list, 3)
-        print("N-grams: %r" % n_gram_list)
+        # n_grams = CreateN_Grams()
+        # n_gram_list = n_grams.createN_Grams(tokens_list, 3)
+        # print("N-grams: %r" % n_gram_list)
 
         standardized_text = " ".join(tokens_list)
         print("Standardized Text: %r" % standardized_text)
@@ -82,7 +80,7 @@ class SPD:
                 'file': docs[i]['name'],
                 'uniqueness': round(x * 100, 2)
             } for i, x in enumerate(uniqueness)
-            ]
+        ]
         print(uniqueness)
 
         docs = [
@@ -93,9 +91,9 @@ class SPD:
                         'file': docs[j]['name'],
                         'similarity': round(y * 100, 2)
                     } for j, y in enumerate(x)
-                    ]
+                ]
             } for i, x in enumerate(similarities)
-            ]
+        ]
 
         docs = SPD.find_closest_files(docs)
         print(docs)

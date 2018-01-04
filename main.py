@@ -4,7 +4,7 @@ from Preprocessor.removingStopWords.RemovingStopWords import RemovingStopWords
 from Preprocessor.stemming.StemmingSinhala import StemmingSinhala
 from Preprocessor.creatingN_Grams.CreateN_Grams import CreateN_Grams
 from Preprocessor.tokenizing.TokenizeText import TokenizeText
-from Preprocessor.replacingSynonyms.ReplacingSynonyms import ReplacingSynonyms
+from Preprocessor.replacingSynonyms.SynonymReplacer import SynonymReplacer
 from SimilarityComparissor.calculateTf_idf_CosineSimilarity import CalculateTf_idf_CosineSimilarity
 
 from Preprocessor.removingUnnecessaryChars.removeUnnecessaryChars import removeUnnecessaryChars
@@ -31,8 +31,8 @@ if __name__ == '__main__':
     tokensList = output
     print("Removed stop words: %r\n" % output)
 
-    replacedSynonyms = ReplacingSynonyms()
-    synonymsReplacedList = replacedSynonyms.replacingSynonyms(tokensList)
+    replacedSynonyms = SynonymReplacer()
+    synonymsReplacedList = replacedSynonyms.replace_synonyms(tokensList)
     tokensList = synonymsReplacedList
     print("Synonym replaced: %r" % synonymsReplacedList)
 

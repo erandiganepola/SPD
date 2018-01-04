@@ -23,7 +23,7 @@ def compare(request):
     template = loader.get_template("spd/index.html")
 
     try:
-        docs = Doc.objects.all().filter(name=doc.name).filter(content=text).get()
+        docs = Doc.objects.all().filter(name=doc.name).get()
         print("Found same doc - %s" % docs)
         context = {
             'error': 'The same document is available in our database. Please upload another.'
